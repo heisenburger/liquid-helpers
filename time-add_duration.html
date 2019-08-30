@@ -5,17 +5,26 @@
   Arguments:
     - starttime (date/time object)
     - duration (integer in minutes, hours, or days)
-    - unit (string, one of: "minute", "hour", "day". Defaults to "minute".)
+    - unit (string, one of: "minutes", "hours", "days". Defaults to "minutes".)
 
   Returns:
     - endtime (date/time object)
 
+  Jekyll example:
+    {% include time-add_duration.html starttime=event.date duration=30 %}
+    will add 30 minutes to event.date
+
+  Usage notes:
+    Reformat the date/time string in the final line to whatever you please.
+    This format is "hardcoded" in. If you want to reformat when you call this helper,
+    try capturing the output and assigning it to a variable
+
 {% endcomment %}
 
 {% assign start = include.starttime | date: '%s' %}
-{% if include.unit == "day" %}
+{% if include.unit == "days" %}
   {% assign duration = include.duration | times: 24 | times: 60 | times: 60 %}
-{% elsif include.unit == "hour" %}
+{% elsif include.unit == "hours" %}
   {% assign duration = include.duration | times: 60 | times: 60 %}
 {% else %}
   {% assign duration = include.duration | times: 60 %}
