@@ -1,0 +1,24 @@
+{% comment %}
+
+  Adds minutes, hours, or days to a time object. 
+
+  Arguments:
+    - starttime (date/time object)
+    - duration (integer in minutes, hours, or days)
+    - unit (string, one of: "minute", "hour", "day". Defaults to "minute".)
+
+  Returns:
+    - endtime (date/time object)
+
+{% endcomment %}
+
+{% assign start = include.starttime | date: '%s' %}
+{% if include.unit == "day" %}
+  {% assign duration = include.duration | times: 24 | times: 60 | times: 60 %}
+{% elsif include.unit == "hour" %}
+  {% assign duration = include.duration | times: 60 | times: 60 %}
+{% else %}
+  {% assign duration = include.duration | times: 60 %}
+{% endif %}
+
+{{ start | plus: duration | date: "%Y-%m-%d %H:%M" }}
